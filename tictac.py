@@ -57,16 +57,24 @@ while True:
     if player_01_location > 9 or player_01_location < 1:
         print("1-9 please!")
         continue
-
     player_what_number(player_01_location, board_global, "player1")
     board_status(board_global)
     if player_wins(board_global, "player1", "x") == 1:
         break
-    #player 2 picks a number
-    player_02_location = int(input("Player2: Use your numerical keyboard to pick a location: "))
+    #player 2 picks a number  
+    x = 1
+    while x == 1:
+        try:
+            player_02_location = int(input("Player2: Use your numerical keyboard to pick a location: "))    
+            if player_02_location > 9 or player_02_location < 1:
+                print("1-9 please!")
+                continue
+            else:
+                x = 2
+        except ValueError:
+            print("1-9 please!")
+            continue        
     player_what_number(player_02_location, board_global, "player2")
     board_status(board_global)
     if player_wins(board_global, "player2", "o") == 1:
         break
-
-
