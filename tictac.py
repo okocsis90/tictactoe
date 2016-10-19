@@ -11,12 +11,15 @@ def board_status(board):
 
 # print on the board what number did player choose:
 def player_what_number(player_pick, board_1, player):
-    for i in range(len(board_1)):
-        if player_pick == board_1[i] and type(board_1[i]) is int:
-            if player == "player1":               
-                board_1[i] = "x"
-            else:
-                board_1[i] = "o"
+    player_pick = player_pick - 1
+    if board_1[player_pick] == "x" or board_1[player_pick] == "o":
+        return 1
+    else:
+        if player == "player1":               
+            board_1[player_pick] = "x"
+        else:
+            board_1[player_pick] = "o"
+    return 2
 
 # when a player wins:
 def player_wins(board_globalwin, player, sign): 
@@ -57,24 +60,38 @@ while True:
     if player_01_location > 9 or player_01_location < 1:
         print("1-9 please!")
         continue
-    player_what_number(player_01_location, board_global, "player1")
+    
+    #modify board
+    if player_what_number(player_01_location, board_global, "player1") == 1:
+        print("Please choose a free slot!")
+        continue
+    #print board
     board_status(board_global)
+    #check if player won
     if player_wins(board_global, "player1", "x") == 1:
         break
-    #player 2 picks a number  
+    
     x = 1
     while x == 1:
         try:
+            #player 2 picks a number
             player_02_location = int(input("Player2: Use your numerical keyboard to pick a location: "))    
             if player_02_location > 9 or player_02_location < 1:
                 print("1-9 please!")
                 continue
             else:
+                #player 2 changes board
+                if player_what_number(player_02_location, board_global, "player2") == 1:
+                    print("Please choose a free slot!")
+                    continue
                 x = 2
         except ValueError:
             print("1-9 please!")
             continue        
-    player_what_number(player_02_location, board_global, "player2")
+    
+    #print board
     board_status(board_global)
+    #check if player won
     if player_wins(board_global, "player2", "o") == 1:
         break
+    
