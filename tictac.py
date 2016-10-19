@@ -47,8 +47,17 @@ def player_wins(board_globalwin, player, sign):
 
 board_status(board_global)
 while True:
-    #player 01 picks a number
-    player_01_location = int(input("Player1: Use your numerical keyboard to pick a location: "))
+    #player 01 picks a number  
+    try:
+        player_01_location = int(input("Player1: Use your numerical keyboard to pick a location: "))    
+        pass
+    except ValueError:
+        print("1-9 please!")
+        continue
+    if player_01_location > 9 or player_01_location < 1:
+        print("1-9 please!")
+        continue
+
     player_what_number(player_01_location, board_global, "player1")
     board_status(board_global)
     if player_wins(board_global, "player1", "x") == 1:
