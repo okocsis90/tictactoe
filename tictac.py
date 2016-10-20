@@ -76,6 +76,12 @@ def choose_mode():
         return "h"   
 
 # game starts, menu
+print("__          __  _                           ")
+print("\ \        / / | |                          ")
+print(" \ \  /\  / /__| | ___ ___  _ __ ___   ___  ")
+print("  \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \ ")
+print("   \  /\  /  __/ | (_| (_) | | | | | |  __/ ")
+print("    \/  \/ \___|_|\___\___/|_| |_| |_|\___|")
 if choose_mode() == "a":
     choose_mode = "ai"
 else:
