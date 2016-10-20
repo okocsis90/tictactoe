@@ -54,52 +54,47 @@ def board_is_full():
         print("It's a draw!")
         return True
         
-
+# player picks number
+def player_picks_location(player_location, player):
+        print(player, end="")
+        player_location = int(input(" : Use your numerical keyboard to pick a location: "))
+        return player_location
+ 
 board_status(board_global)
+counter_global = 0
+player_X_location = 0
+
 while True:
-    #player 01 picks a number  
+
+    # player picks a number and examine if it is a proper choice
     try:
-        player_01_location = int(input("Player1: Use your numerical keyboard to pick a location: "))    
-        pass
+        if counter_global % 2 == 0:
+            player_X_location = player_picks_location(player_X_location, "player1")        
+        elif counter_global % 2 != 0:
+            player_X_location = player_picks_location(player_X_location, "player2")            
     except ValueError:
         print("1-9 please!")
         continue
-    if player_01_location > 9 or player_01_location < 1:
+    if player_X_location > 9 or player_X_location < 1:
         print("1-9 please!")
         continue
-    
-    #modify board
-    if player_what_number(player_01_location, board_global, "player1") == False:
-        print("Please choose a free slot!")
-        continue
-    #print board
+  
+    # modify board
+    if counter_global % 2 == 0:
+        if player_what_number(player_X_location, board_global, "player1") == False:
+            print("Please choose a free slot!")
+            continue       
+    elif counter_global % 2 != 0:
+        if player_what_number(player_X_location, board_global, "player2") == False:
+            print("Please choose a free slot!")
+            continue
+           
+    # print board
     board_status(board_global)
-    #check if player won or game is draw
-    if player_wins(board_global, "player1", "x") == True or board_is_full() == True:
-        break
-    
 
-    x = 1
-    while x == 1:           
-        try:
-            #player 2 picks a number
-            player_02_location = int(input("Player2: Use your numerical keyboard to pick a location: "))    
-            if player_02_location > 9 or player_02_location < 1:
-                print("1-9 please!")
-                continue
-            else:
-                #player 2 changes board
-                if player_what_number(player_02_location, board_global, "player2") == False:
-                    print("Please choose a free slot!")
-                    continue
-                x = 2
-        except ValueError:
-            print("1-9 please!")
-            continue        
-    
-    #print board
-    board_status(board_global)
-    #check if player won
-    if player_wins(board_global, "player2", "o") == True or board_is_full() == True:
+    # check if player won or game is draw
+    if player_wins(board_global, "player1", "x") == True or player_wins(board_global, "player2", "o") == True or board_is_full() == True:
         break
+    # set the counter
+    counter_global += 1
     
