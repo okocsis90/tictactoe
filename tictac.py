@@ -22,30 +22,15 @@ def player_what_number(player_pick, board, player):
     return True
 
 # when a player wins:
-def player_wins(board_globalwin, player, sign): 
-    if board_globalwin[0] == sign and board_globalwin[1] == sign and board_globalwin[2] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[3] == sign and board_globalwin[4] == sign and board_globalwin[5] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[6] == sign and board_globalwin[7] == sign and board_globalwin[8] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[0] == sign and board_globalwin[3] == sign and board_globalwin[6] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[1] == sign and board_globalwin[4] == sign and board_globalwin[7] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[2] == sign and board_globalwin[5] == sign and board_globalwin[8] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[2] == sign and board_globalwin[4] == sign and board_globalwin[6] == sign:
-        print(player, "won!")
-        return True
-    elif board_globalwin[0] == sign and board_globalwin[4] == sign and board_globalwin[8] == sign:
-        print(player, "won!")
+def player_wins(board_globalwin, sign): 
+    if ((board_globalwin[0] == sign and board_globalwin[1] == sign and board_globalwin[2] == sign) or
+       (board_globalwin[3] == sign and board_globalwin[4] == sign and board_globalwin[5] == sign) or
+       (board_globalwin[6] == sign and board_globalwin[7] == sign and board_globalwin[8] == sign) or
+       (board_globalwin[0] == sign and board_globalwin[3] == sign and board_globalwin[6] == sign) or
+       (board_globalwin[1] == sign and board_globalwin[4] == sign and board_globalwin[7] == sign) or
+       (board_globalwin[2] == sign and board_globalwin[5] == sign and board_globalwin[8] == sign) or
+       (board_globalwin[2] == sign and board_globalwin[4] == sign and board_globalwin[6] == sign) or
+       (board_globalwin[0] == sign and board_globalwin[4] == sign and board_globalwin[8] == sign)):
         return True
 
 # when draw
@@ -65,13 +50,17 @@ counter_global = 0
 player_X_location = 0
 
 while True:
+    # check if player 1 or player 2
+    if counter_global % 2 == 0:
+        player = "player1"
+        sign = "x"
+    else:
+        player = "player2"
+        sign = "o"
 
     # player picks a number and examine if it is a proper choice
     try:
-        if counter_global % 2 == 0:
-            player_X_location = player_picks_location(player_X_location, "player1")        
-        elif counter_global % 2 != 0:
-            player_X_location = player_picks_location(player_X_location, "player2")            
+        player_X_location = player_picks_location(player_X_location, player)           
     except ValueError:
         print("1-9 please!")
         continue
@@ -80,21 +69,21 @@ while True:
         continue
   
     # modify board
-    if counter_global % 2 == 0:
-        if player_what_number(player_X_location, board_global, "player1") == False:
-            print("Please choose a free slot!")
-            continue       
-    elif counter_global % 2 != 0:
-        if player_what_number(player_X_location, board_global, "player2") == False:
-            print("Please choose a free slot!")
-            continue
+    if player_what_number(player_X_location, board_global, player) == False:
+        print("Please choose a free slot!")
+        continue       
            
     # print board
     board_status(board_global)
 
     # check if player won or game is draw
-    if player_wins(board_global, "player1", "x") == True or player_wins(board_global, "player2", "o") == True or board_is_full() == True:
+    if player_wins(board_global, sign) == True:
+        print(player, "won!")
         break
+
+    if board_is_full() == True:
+        break
+
     # set the counter
     counter_global += 1
     
