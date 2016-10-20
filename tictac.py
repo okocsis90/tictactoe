@@ -10,43 +10,50 @@ def board_status(board):
     print(" ", board[0], " | ", board[1], " | ", board[2])
 
 # print on the board what number did player choose:
-def player_what_number(player_pick, board_1, player):
+def player_what_number(player_pick, board, player):
     player_pick = player_pick - 1
-    if board_1[player_pick] == "x" or board_1[player_pick] == "o":
-        return 1
+    if board[player_pick] == "x" or board[player_pick] == "o":
+        return False
     else:
         if player == "player1":               
-            board_1[player_pick] = "x"
+            board[player_pick] = "x"
         else:
-            board_1[player_pick] = "o"
-    return 2
+            board[player_pick] = "o"
+    return True
 
 # when a player wins:
 def player_wins(board_globalwin, player, sign): 
     if board_globalwin[0] == sign and board_globalwin[1] == sign and board_globalwin[2] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[3] == sign and board_globalwin[4] == sign and board_globalwin[5] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[6] == sign and board_globalwin[7] == sign and board_globalwin[8] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[0] == sign and board_globalwin[3] == sign and board_globalwin[6] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[1] == sign and board_globalwin[4] == sign and board_globalwin[7] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[2] == sign and board_globalwin[5] == sign and board_globalwin[8] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[2] == sign and board_globalwin[4] == sign and board_globalwin[6] == sign:
         print(player, "won!")
-        return 1
+        return True
     elif board_globalwin[0] == sign and board_globalwin[4] == sign and board_globalwin[8] == sign:
         print(player, "won!")
-        return 1
+        return True
+
+# when draw
+def board_is_full():
+    if all(isinstance(i, str) for i in board_global):
+        print("It's a draw!")
+        return True
+        
 
 board_status(board_global)
 while True:
@@ -62,17 +69,18 @@ while True:
         continue
     
     #modify board
-    if player_what_number(player_01_location, board_global, "player1") == 1:
+    if player_what_number(player_01_location, board_global, "player1") == False:
         print("Please choose a free slot!")
         continue
     #print board
     board_status(board_global)
-    #check if player won
-    if player_wins(board_global, "player1", "x") == 1:
+    #check if player won or game is draw
+    if player_wins(board_global, "player1", "x") == True or board_is_full() == True:
         break
     
+
     x = 1
-    while x == 1:
+    while x == 1:           
         try:
             #player 2 picks a number
             player_02_location = int(input("Player2: Use your numerical keyboard to pick a location: "))    
@@ -81,7 +89,7 @@ while True:
                 continue
             else:
                 #player 2 changes board
-                if player_what_number(player_02_location, board_global, "player2") == 1:
+                if player_what_number(player_02_location, board_global, "player2") == False:
                     print("Please choose a free slot!")
                     continue
                 x = 2
@@ -92,6 +100,6 @@ while True:
     #print board
     board_status(board_global)
     #check if player won
-    if player_wins(board_global, "player2", "o") == 1:
+    if player_wins(board_global, "player2", "o") == True or board_is_full() == True:
         break
     
