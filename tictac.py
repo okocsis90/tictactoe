@@ -4,11 +4,13 @@ import random
 
 # board:
 def board_status(board):
+    print("\n")
     print(" ", board[6], " | ", board[7], " | ", board[8])
     print("-----------------")
     print(" ", board[3], " | ", board[4], " | ", board[5])
     print("-----------------")
     print(" ", board[0], " | ", board[1], " | ", board[2])
+    print("\n")
 
 # print on the board what number did player choose:
 def player_what_number(player_pick, board, player):
