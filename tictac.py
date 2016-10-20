@@ -55,6 +55,14 @@ def computer_picks_location(board):
         board[choose - 1] = "o"
     return True
 
+def playAgain():
+    # This function returns True if the player wants to play again, otherwise it returns False.
+    play_again = input('Do you want to play again? (y or n): ')
+    if play_again == "y":
+        return True
+    else:
+        return False
+
 # game starts here, menu
 choose_mode = input("For AI press x, for Human opponent press y: ")
 board_status(board_global)
@@ -116,10 +124,20 @@ while True:
     # check if player won or game is draw
     if player_wins(board_global, sign) == True:
         print(player, "won!")
-        break
+        board_global = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        if playAgain() == True:
+            board_status(board_global)
+            continue
+        else:
+            break
 
     if board_is_full() == True:
-        break
+        board_global = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        if playAgain() == True:
+            board_status(board_global)
+            continue
+        else:
+            break
 
     # set the counter
     counter_global += 1
