@@ -57,7 +57,9 @@ def computer_picks_location(board):
 
 # This function returns True if the player wants to play again, otherwise it returns False.
 def playAgain():
-    play_again = input('Do you want to play again? (y or n): ')
+    play_again = " "
+    while not (play_again == "y" or play_again == "n"):
+        play_again = input("Do you want to play again? (y or n): ")
     if play_again == "y":
         return True
     else:
@@ -67,8 +69,7 @@ def playAgain():
 def choose_mode():
     mode = " "
     while not (mode == "a" or mode == "h"):
-        print("For AI press a, for Human opponent press h: ")
-        mode = input()
+        mode = input("For AI opponent press a, for Human opponent press h: ")
     if mode == "a":
         return "a"
     else:
