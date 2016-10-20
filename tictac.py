@@ -57,23 +57,24 @@ def computer_picks_location(board):
 
 # game starts here, menu
 choose_mode = input("For AI press x, for Human opponent press y: ")
+board_status(board_global)
+counter_global = 0
+player_X_location = 0
 
-# human opponent
-if choose_mode == "y":
-    board_status(board_global)
-    counter_global = 0
-    player_X_location = 0
+while True:
+    # check if player 1 or player 2 or AI
+    if counter_global % 2 == 0:
+        player = "player1"
+        sign = "x"
+    else:
+        if choose_mode == "y":
+            player = "player2"     
+        elif choose_mode == "x":
+            player = "Computer"
+        sign = "o"
 
-    while True:
-        # check if player 1 or player 2
-        if counter_global % 2 == 0:
-            player = "player1"
-            sign = "x"
-        else:
-            player = "player2"
-            sign = "o"
-
-        # player picks a number and examine if it is a proper choice
+    # player picks a number and examine if it is a proper choice in Human mode
+    if choose_mode == "y":
         try:
             player_X_location = player_picks_location(player_X_location, player)           
         except ValueError:
@@ -82,42 +83,14 @@ if choose_mode == "y":
         if player_X_location > 9 or player_X_location < 1:
             print("1-9 please!")
             continue
-    
+        
         # modify board
         if player_what_number(player_X_location, board_global, player) == False:
             print("Please choose a free slot!")
             continue       
-            
-        # print board
-        board_status(board_global)
-
-        # check if player won or game is draw
-        if player_wins(board_global, sign) == True:
-            print(player, "won!")
-            break
-
-        if board_is_full() == True:
-            break
-
-        # set the counter
-        counter_global += 1
-
-# computer opponent   
-elif choose_mode == "x":
-    board_status(board_global)
-    counter_global = 0
-    player_X_location = 0
-
-    while True:
-        # check if player 1 or AI
-        if counter_global % 2 == 0:
-            player = "player1"
-            sign = "x"
-        else:
-            player = "Computer"
-            sign = "o"
-
-        # player picks a number and examine if it is a proper choice
+    
+    # player / AI picks a number
+    elif choose_mode == "x":
         if player == "player1":
             try:
                 player_X_location = player_picks_location(player_X_location, player)           
@@ -127,29 +100,28 @@ elif choose_mode == "x":
             if player_X_location > 9 or player_X_location < 1:
                 print("1-9 please!")
                 continue
-    
+            
             # modify board
             if player_what_number(player_X_location, board_global, player) == False:
                 print("Please choose a free slot!")
-                continue       
-
-        # AI choose    
-        if player == "Computer":
-            print("Computer: ")
+                continue   
+        else:
             if computer_picks_location(board_global) == False:
                 continue
+            print("Computer: ")
     
-        # print board
-        board_status(board_global)
+    # print board
+    board_status(board_global)
 
-        # check if player won or game is draw
-        if player_wins(board_global, sign) == True:
-            print(player, "won!")
-            break
+    # check if player won or game is draw
+    if player_wins(board_global, sign) == True:
+        print(player, "won!")
+        break
 
-        if board_is_full() == True:
-            break
+    if board_is_full() == True:
+        break
 
-        # set the counter
-        counter_global += 1
+    # set the counter
+    counter_global += 1
+
         
