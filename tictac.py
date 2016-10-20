@@ -55,16 +55,30 @@ def computer_picks_location(board):
         board[choose - 1] = "o"
     return True
 
+# This function returns True if the player wants to play again, otherwise it returns False.
 def playAgain():
-    # This function returns True if the player wants to play again, otherwise it returns False.
     play_again = input('Do you want to play again? (y or n): ')
     if play_again == "y":
         return True
     else:
         return False
 
-# game starts here, menu
-choose_mode = input("For AI press x, for Human opponent press y: ")
+# player chooses if he wants to play with AI or Human
+def choose_mode():
+    mode = " "
+    while not (mode == "a" or mode == "h"):
+        print("For AI press a, for Human opponent press h: ")
+        mode = input()
+    if mode == "a":
+        return "a"
+    else:
+        return "h"   
+
+# game starts, menu
+if choose_mode() == "a":
+    choose_mode = "ai"
+else:
+    choose_mode = "human"
 board_status(board_global)
 counter_global = 0
 player_X_location = 0
@@ -75,14 +89,14 @@ while True:
         player = "player1"
         sign = "x"
     else:
-        if choose_mode == "y":
+        if choose_mode == "human":
             player = "player2"     
-        elif choose_mode == "x":
+        elif choose_mode == "ai":
             player = "Computer"
         sign = "o"
 
     # player picks a number and examine if it is a proper choice in Human mode
-    if choose_mode == "y":
+    if choose_mode == "human":
         try:
             player_X_location = player_picks_location(player_X_location, player)           
         except ValueError:
@@ -98,7 +112,7 @@ while True:
             continue       
     
     # player / AI picks a number
-    elif choose_mode == "x":
+    elif choose_mode == "ai":
         if player == "player1":
             try:
                 player_X_location = player_picks_location(player_X_location, player)           
