@@ -13,13 +13,13 @@ def board_status(board):
 # print on the board what number did player choose:
 def player_what_number(player_pick, board, player):
     player_pick = player_pick - 1
-    if board[player_pick] == "x" or board[player_pick] == "o":
+    if board[player_pick] == "\033[93m" + "\033[1m" + "x" + "\033[0m" or board[player_pick] == "\033[91m" + "\033[1m" + "o" + "\033[0m":
         return False
     else:
         if player == "player1":               
-            board[player_pick] = "x"
+            board[player_pick] = "\033[93m" + "\033[1m" + "x" + "\033[0m"
         else:
-            board[player_pick] = "o"
+            board[player_pick] = "\033[91m" + "\033[1m" + "o" + "\033[0m"
     return True
 
 # when a player wins:
@@ -49,10 +49,10 @@ def player_picks_location(player_location, player):
 # AI picks location
 def computer_picks_location(board):
     choose = random.randrange(10) 
-    if board[choose - 1] == "x" or board[choose - 1] == "o":
+    if board[choose - 1] == "\033[93m" + "\033[1m" + "x" + "\033[0m" or board[choose - 1] == "\033[91m" + "\033[1m" + "o" + "\033[0m":
         return False
     else:
-        board[choose - 1] = "o"
+        board[choose - 1] = "\033[91m" + "\033[1m" + "o" + "\033[0m"
     return True
 
 # This function returns True if the player wants to play again, otherwise it returns False.
@@ -94,13 +94,13 @@ while True:
     # check if player 1 or player 2 or AI
     if counter_global % 2 == 0:
         player = "player1"
-        sign = "x"
+        sign = "\033[93m" + "\033[1m" + "x" + "\033[0m"
     else:
         if choose_mode == "human":
             player = "player2"     
         elif choose_mode == "ai":
             player = "Computer"
-        sign = "o"
+        sign = "\033[91m" + "\033[1m" + "o" + "\033[0m"
 
     # player picks a number and examine if it is a proper choice in Human mode
     if choose_mode == "human":
